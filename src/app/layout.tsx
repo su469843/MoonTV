@@ -11,6 +11,7 @@ import RuntimeConfig from '@/lib/runtime';
 
 import { SiteProvider } from '../components/SiteProvider';
 import { ThemeProvider } from '../components/ThemeProvider';
+import { UserStatusChecker } from '../components/UserStatusChecker';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -112,6 +113,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <SiteProvider siteName={siteName} announcement={announcement}>
+            <UserStatusChecker />
             {children}
           </SiteProvider>
         </ThemeProvider>
