@@ -3,6 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { getAuthInfoFromCookie } from '@/lib/auth';
+import { getConfig } from '@/lib/config';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -51,6 +52,18 @@ export async function middleware(request: NextRequest) {
 
     // 签名验证通过即可
     if (isValidSignature) {
+      // 检查用户是否被禁用
+      const config = await getConfig();
+      const user = config.UserConfig.Users.find(
+        (u) => u.username === authInfo.username
+      );
+      
+      if (user && user.banned) {
+        // 用户被禁用，重定向到禁用页面
+        const bannedUrl = new URL('/banned', request.url);
+        return NextResponse.redirect(bannedUrl);
+      }
+      
       return NextResponse.next();
     }
   }
