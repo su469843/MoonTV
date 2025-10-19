@@ -1,13 +1,6 @@
-import { Metadata } from 'next';
-import Link from 'next/link';
-
-export const metadata: Metadata = {
-  title: '账户已被禁用 - MoonTV',
-  description: '您的账户已被管理员禁用',
-};
-
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
