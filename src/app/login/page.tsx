@@ -112,8 +112,12 @@ function LoginPageClient() {
       } else if (res.status === 401) {
         setError('密码错误');
       } else if (res.status === 403) {
-        // 用户被禁用，跳转到禁用页面
-        router.replace('/banned');
+        const data = await res.json().catch(() => ({}));
+        setError(data.error || '用户被封禁');
+        // 2秒后跳转到禁用页面
+        setTimeout(() => {
+          router.replace('/banned');
+        }, 2000);
       } else {
         const data = await res.json().catch(() => ({}));
         setError(data.error ?? '服务器错误');
